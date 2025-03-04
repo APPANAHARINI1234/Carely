@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "../styles.css";
+import logo from "../assets/logo.png"
 
 const Home = () => {
   return (
@@ -12,6 +13,8 @@ const Home = () => {
         <p className="main-description">
           Your trusted health companion, offering personalized care and wellness insights.
         </p>
+        <img src={logo} alt="logo" width="50px" />
+       
         <button className="main-button">Get Started</button>
       </main>
       <Footer />
