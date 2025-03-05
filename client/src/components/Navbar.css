@@ -1,0 +1,25 @@
+/* src/styles/Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background: #2c3e50;
+    padding: 15px;
+    color: white;
+  }
+  .nav-links a {
+    margin: 0 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .nav-links a:hover {
+    color: #ff9100;
+  }
+  .auth-section button {
+    padding: 10px;
+    border: none;
+    background: #ff4081;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
