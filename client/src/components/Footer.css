@@ -1,0 +1,13 @@
+/* src/styles/Footer.css */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #34495e;
+    color: white;
+  }
+  .social-icons a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+  }
+  

@@ -1,0 +1,36 @@
+/* Edit Profile Container */
+.edit-container {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background: #f4f4f4;
+    border-radius: 10px;
+  }
+  
+  .edit-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .edit-container input {
+    width: 90%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .edit-container button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .edit-container button:hover {
+    opacity: 0.8;
+  }
+  
