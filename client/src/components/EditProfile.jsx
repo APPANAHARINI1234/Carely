@@ -1,47 +1,59 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useUser } from "../components/UserContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./EditProfile.css"; 
+import axios from "axios";
+import "./EditProfile.css";
 
 const EditProfile = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser({ name: storedUser.name, email: storedUser.email, password: "" });
-    }
-  }, []);
+  const { user, setUser } = useUser();
+  const navigate = useNavigate(); // For redirection
+  const [formData, setFormData] = useState({
+    name: user?.name || "",
+    email: user?.email || "",
+    profilePic: user?.profilePic || "",
+  });
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleUpdate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.put("http://localhost:5000/api/auth/edit-profile", user, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.put(
+        "http://localhost:5000/api/auth/edit-profile",
+        formData,
+        { withCredentials: true }
+      );
 
-      localStorage.setItem("user", JSON.stringify(res.data.updatedUser));
-      alert("Profile updated successfully!");
+      // Update user context immediately
+      setUser(res.data);
+
+      alert("Profile updated!");
+
+      // Redirect to home page
       navigate("/");
     } catch (err) {
-      alert(err.response?.data?.message || "Update failed");
+      console.error("Error updating profile:", err);
+      alert("Failed to update profile.");
     }
   };
 
   return (
-    <div className="edit-container">
+    <div className="edit-profile">
       <h2>Edit Profile</h2>
-      <form onSubmit={handleUpdate}>
-        <input type="text" name="name" value={user.name} onChange={handleChange} placeholder="Name" required />
-        <input type="email" name="email" value={user.email} onChange={handleChange} placeholder="Email" required />
-        <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="New Password" />
-        <button type="submit">Update Profile</button>
+
+      {/* Show profile picture preview */}
+      {formData.profilePic && (
+        <img src={formData.profilePic} alt="Profile" className="profile-pic-preview" />
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
+        <input type="email" name="email" value={formData.email} readOnly />
+        <input type="text" name="profilePic" value={formData.profilePic} onChange={handleChange} placeholder="Profile Picture URL" />
+
+        <button type="submit">Save Changes</button>
       </form>
     </div>
   );

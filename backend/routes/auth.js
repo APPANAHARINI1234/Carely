@@ -1,6 +1,5 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
@@ -29,54 +28,66 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
-
-
-const secretKey = process.env.JWT_SECRET; // Get secret from environment
-
+// Login (without JWT)
 router.post("/login", async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-        if (!user) return res.status(400).json({ message: "User not found" });
+    if (!user) return res.status(400).json({ message: "User not found" });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: "1h" });
-
-        res.json({
-            token,
-            user: {
-                name: user.name,
-                email: user.email,
-            },
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Server error" });
-    }
+    res.json({
+      user: {
+        name: user.name,
+        email: user.email,
+        profilePic: user.profilePic, // Send profilePic in response
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
+// Edit Profile (using email)
 router.put("/edit-profile", async (req, res) => {
-    try {
-      const { name, email, password } = req.body;
-      const user = await User.findOne({ email });
-  
-      if (!user) return res.status(404).json({ message: "User not found" });
-  
-      if (name) user.name = name;
-      if (email) user.email = email;
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-      }
-  
-      await user.save();
-      res.json({ message: "Profile updated successfully", updatedUser: { name: user.name, email: user.email } });
-    } catch (error) {
-      res.status(500).json({ message: "Server error" });
+  const { name, email, profilePic } = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { name, profilePic },
+      { new: true } // Ensure it returns the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
     }
-  });
-  
+
+    res.json(updatedUser); // Send full updated user
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    res.status(500).json({ message: "Error updating profile", error: err });
+  }
+});
+
+// Get User (using email)
+router.get("/user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ email }).select("-password"); // Exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;
