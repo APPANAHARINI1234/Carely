@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext"; // Import UserContext
 import "./Login.css"; // Importing the stylesheet
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUser(); // Use Context to store user temporarily
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
-      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user); // Store user temporarily in Context
       setMessage("Login successful! Redirecting...");
       setTimeout(() => navigate("/home"), 2000);
     } catch (err) {

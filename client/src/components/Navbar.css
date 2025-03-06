@@ -1,25 +1,134 @@
-/* src/styles/Navbar.css */
+/* Navbar Styling */
 .navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    background: #2c3e50;
-    padding: 15px;
-    color: white;
   }
-  .nav-links a {
-    margin: 0 15px;
-    cursor: pointer;
-    transition: 0.3s;
+  
+  /* Logo */
+  .navbar .logo-container {
+    display: flex;
+    align-items: center;
   }
-  .nav-links a:hover {
-    color: #ff9100;
+  
+  .navbar .logo {
+    height: 40px;
+    width: 40px;
   }
-  .auth-section button {
-    padding: 10px;
-    border: none;
-    background: #ff4081;
-    color: white;
-    border-radius: 5px;
+  
+  .navbar .logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  /* Search Bar */
+  .navbar .search-bar {
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 0 20px;
+  }
+  
+  .navbar .search-bar input {
+    width: 100%;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+  }
+  
+  .navbar .search-bar input:focus {
+    border-color: #007bff;
+  }
+  
+  /* Profile and Login */
+  .navbar .profile-container {
+    position: relative;
+  }
+  
+  .navbar .profile-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
     cursor: pointer;
   }
   
+  .navbar .dropdown {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    width: 150px;
+    text-align: left;
+  }
+  
+  .navbar .dropdown p {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .navbar .dropdown a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .navbar .dropdown button {
+    background-color: #dc3545;
+    color: white;
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  
+  .navbar .dropdown button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Login Button */
+  .navbar .login-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .navbar .login-btn:hover {
+    background-color: #0056b3;
+  }
+  .dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000; /* ✅ Ensure it's above other elements */
+  }
+  
+  .notifications-dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000; /* ✅ Ensure it's above other elements */
+    pointer-events: auto; /* ✅ Allow interactions */
+  }
+  .add-notification-btn{
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000; /* ✅ Ensure it's above other elements */
+    pointer-events: auto; /* ✅ Allow interactions */
+  }

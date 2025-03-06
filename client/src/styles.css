@@ -6,13 +6,6 @@
     font-family: Arial, sans-serif;
   }
   
-  /* Navbar Styles */
-  .navbar {
-    background-color: #2e865f;
-    padding: 15px 0;
-    color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
   
   .container {
     width: 90%;
