@@ -1,0 +1,27 @@
+.disease-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #e8f5e9;
+    border-radius: 10px;
+  }
+  
+  .disease-container h1 {
+    color: #2e7d32;
+    text-align: center;
+  }
+  
+  .disease-container h3 {
+    color: #1b5e20;
+    margin: 10px 0;
+  }
+  
+  .disease-container ul {
+    padding-left: 20px;
+  }
+  
+  .disease-container li {
+    margin: 5px 0;
+  }
+  
