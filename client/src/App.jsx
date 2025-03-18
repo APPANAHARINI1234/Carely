@@ -4,9 +4,11 @@ import Register from "./components/Register";
 import EditProfile from "./components/EditProfile"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Login";
-import Home from "./components/Home"; // Import Dashboard
+import Home from "./components/Home"; 
 import AddNotification from "./components/AddNotification";
 import Notifications from "./components/Notifications";
+import Explore from "./components/Explore"; 
+
 const App = () => {
   return (
     <Router>
@@ -18,6 +20,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/add-notification" element={<AddNotification />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/explore" element={<Explore />} /> 
       </Routes>
     </Router>
   );
