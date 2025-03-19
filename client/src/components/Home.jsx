@@ -5,11 +5,9 @@ import Footer from "./Footer";
 import "./Home.css";
 import logo from "../assets/logo.png";
 
-
 const Home = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,6 +26,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <Navbar user={user} handleLogout={handleLogout} />
+      
       <header className="hero-section">
         <img src={logo} alt="Hero" className="hero-image" />
         <div className="hero-overlay">
@@ -36,14 +35,27 @@ const Home = () => {
           <button className="cta-btn" onClick={() => navigate("/explore")}>Explore More</button>
         </div>
       </header>
+
       <section className="features">
         <div className="feature-card">🏥 Find Nearby Hospitals</div>
         <div className="feature-card">📅 Track Appointments</div>
         <div className="feature-card">🩺 Health Insights</div>
         <div className="feature-card">💊 Medicine Reminders</div>
       </section>
+
+      {/* ✅ Add MediBot Navigation */}
+      <div className="medibot-section">
+        <h2>🤖 Need Health Advice?</h2>
+        <p>Chat with MediBot for personalized health insights and remedies.</p>
+        <button className="medibot-btn" onClick={() => navigate("/medibot")}>
+          Talk to MediBot
+        </button>
+
+      </div>
+
       <Footer />
     </div>
   );
 };
+
 export default Home;
