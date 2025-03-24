@@ -1,57 +1,19 @@
-import { useEffect, useState, useRef } from "react";
-
-import { requestFcmToken, onMessageListener, messaging } from "./firebaseConfig";
+import { useEffect, useState } from "react";
+import { requestFcmToken, onMessageListener } from "./firebaseConfig";
 import NotificationSettings from "./NotificationSettings";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import styles
 
 function MediSettings() {
-    const [notification, setNotification] = useState(null);
-    const [fsm, setFsm] = useState(localStorage.getItem("fcm_token") || ""); 
-    const listenerSet = useRef(false); // ✅ Prevent multiple listeners
+    const [fsm, setFsm] = useState(localStorage.getItem("fcm_token") || "");
 
     useEffect(() => {
         const setupFirebase = async () => {
             try {
-                let token = fsm || await requestFcmToken();
+                const token = await requestFcmToken();
                 if (token) {
                     setFsm(token);
                     localStorage.setItem("fcm_token", token);
-                }
-
-                // ✅ Ensure listener is added only ONCE
-                if (!listenerSet.current) {
-                    listenerSet.current = true; // ✅ Mark listener as set
-
-                    onMessageListener()
-                        .then(async (payload) => {
-                            console.log("🔔 New Notification Received:", payload);
-
-                            const istDate = new Date();
-                            istDate.setHours(istDate.getHours() + 5);
-                            istDate.setMinutes(istDate.getMinutes() + 30);
-
-                            const notificationData = {
-                                title: payload.notification?.title || "Reminder",
-                                body: payload.notification?.body || "Time to take your medicine!",
-                                fcmToken: token,
-                                datetime: istDate.toISOString().slice(0, 16),
-                            };
-
-                            console.log("📦 Sending Notification Data to Backend:", notificationData);
-                            setNotification(notificationData);
-
-                            const response = await fetch("http://localhost:5000/notify/store-notification", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(notificationData),
-                            });
-
-                            if (response.ok) {
-                                console.log("✅ Notification stored in backend");
-                            } else {
-                                console.error("❌ Failed to store notification in backend.");
-                            }
-                        })
-                        .catch((err) => console.error("❌ Error in message listener:", err));
                 }
             } catch (error) {
                 console.error("❌ Error setting up Firebase:", error);
@@ -59,20 +21,85 @@ function MediSettings() {
         };
 
         setupFirebase();
-    }, []); // ✅ Runs only once on mount
+    }, []);
+
+    useEffect(() => {
+        const handleNotification = (payload) => {
+            console.log("🔔 New Notification Received:", payload);
+
+            const now = new Date();
+            const istTime = new Intl.DateTimeFormat("en-IN", {
+                timeZone: "Asia/Kolkata",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            }).format(now);
+
+            const istDate = new Intl.DateTimeFormat("en-IN", {
+                timeZone: "Asia/Kolkata",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            }).format(now);
+
+            const notificationData = {
+                title: payload.notification?.title || "Reminder",
+                body: payload.notification?.body || "Time to take your medicine!",
+                datetime: `${istDate} ${istTime}`,
+            };
+
+            // ✅ Show toast notification for every message
+            toast.info(
+                <div style={{ textAlign: "left", padding: "10px", maxWidth: "300px", lineHeight: "1.5" }}>
+                    <strong>{notificationData.title}</strong>
+                    <br />
+                    {notificationData.body}
+                    <br /><br />
+                    <strong>🕒 Time:</strong> {istTime}
+                    <br />
+                    <strong>📅 Date:</strong> {istDate}
+                </div>,
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: { maxWidth: "320px", wordWrap: "break-word" },
+                }
+            );
+
+            // Send notification data to backend (optional)
+            fetch("http://localhost:5000/notify/store-notification", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(notificationData),
+            }).catch((err) => console.error("❌ Error sending notification to backend:", err));
+        };
+
+        // ✅ Ensure continuous listening for notifications
+        const listenForNotifications = async () => {
+            while (true) {
+                try {
+                    const payload = await onMessageListener();
+                    handleNotification(payload);
+                } catch (err) {
+                    console.error("❌ Error in message listener:", err);
+                }
+            }
+        };
+
+        listenForNotifications();
+    }, []);
 
     return (
         <div style={{ textAlign: "center", padding: "20px" }}>
             <h1>📅 Medicine Reminder App</h1>
             <NotificationSettings />
-            {notification && (
-                <div style={{ marginTop: "20px", padding: "10px", border: "1px solid #4CAF50", borderRadius: "5px", backgroundColor: "#DFF2BF", display: "inline-block" }}>
-                    <strong>{notification.title}</strong>
-                    <p>{notification.body}</p>
-                    <p><strong>🕒 Time:</strong> {new Date(notification.datetime).toLocaleTimeString("en-IN", { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZone: "Asia/Kolkata" })}</p>
-                    <p><strong>📅 Date:</strong> {new Date(notification.datetime).toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Asia/Kolkata" })}</p>
-                </div>
-            )}
+            {/* ✅ Toast Notification Container */}
+            <ToastContainer />
         </div>
     );
 }
