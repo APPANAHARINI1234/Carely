@@ -3,11 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/logo.png" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carely</title>
+
+    <!-- Load Google Translate API -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "hi,ta,te,kn,ml,gu,mr,bn,pa,ur",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      }
+
+      function toggleTranslate() {
+        var translateBox = document.getElementById("translator-container");
+
+        // Toggle visibility of Translate box
+        if (translateBox.style.display === "block") {
+          translateBox.style.display = "none";
+        } else {
+          translateBox.style.display = "block";
+        }
+      }
+
+      function observeTranslateBanner() {
+        const observer = new MutationObserver(() => {
+          const banner = document.querySelector(".goog-te-banner-frame");
+          const navbar = document.querySelector(".navbar");
+
+          if (banner) {
+            navbar.style.display = "block"; // Show navbar when translation is active
+            navbar.style.marginTop = banner.offsetHeight + "px";
+          } else {
+            navbar.style.display = "none"; // Hide navbar when translation is inactive
+          }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+      }
+
+      window.onload = observeTranslateBanner;
+    </script>
+
+    <style>
+      /* Floating Translate Button */
+      #custom_translate_btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      #custom_translate_btn:hover {
+        background: #45a049;
+        transform: scale(1.05);
+      }
+
+      /* Dropdown for Google Translate */
+      #translator-container {
+        display: none;
+        position: fixed;
+        bottom: 70px;
+        right: 20px;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+
+      /* Navbar (Initially Hidden) */
+      .navbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #333;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        transition: margin-top 0.3s ease-in-out;
+        z-index: 1000;
+      }
+    </style>
   </head>
   <body>
+    <!-- Floating Translate Button -->
+    <div id="custom_translate_btn" onclick="toggleTranslate()">🌍 Translate</div>
+
+    <!-- Navbar (Initially Hidden) -->
+    <div class="navbar">My Website Navbar</div>
+
+    <!-- Google Translate Dropdown -->
+    <div id="translator-container">
+      <div id="google_translate_element"></div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
