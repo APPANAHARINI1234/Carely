@@ -1,0 +1,26 @@
+/* Hide the top-left Google Translate toolbar */
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+/* Hide the Google logo and branding */
+.goog-logo-link,
+.goog-te-gadget span {
+    display: none !important;
+}
+
+/* Style the dropdown box */
+#google_translate_element select {
+    background: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Ensure the dropdown is visible */
+.goog-te-combo {
+    display: inline-block !important;
+}

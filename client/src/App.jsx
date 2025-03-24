@@ -1,26 +1,50 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./components/Register";
-import EditProfile from "./components/EditProfile"; 
+import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import Register from "./components/register/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/Login";
+import Login from "./components/login/Login";
+import Sign from "./components/register/Sign";
+import MediSettings from "./components/notifications/MediSettings";
 import Home from "./components/Home"; // Import Dashboard
-import AddNotification from "./components/AddNotification";
-import Notifications from "./components/Notifications";
+import RootLayout from './RootLayout';
+import NotificationBell from "./components/notifications/NotificationBell";
+
 const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/add-notification" element={<AddNotification />} />
-        <Route path="/notifications" element={<Notifications />} />
-      </Routes>
-    </Router>
+  const browserRouter=createBrowserRouter(
+    [
+      {
+        path:'/',
+        element :<RootLayout />,
+        children :[
+          {
+            path:'/',
+            element:<Home />,
+          },{
+            path:'/login',
+            element:<Login />,
+          },{
+             path :'/auth',
+             element:<Sign />
+          },
+            {
+            path:'/register',
+            element:<Register />,
+          },
+          {
+            path:'/mediNotify',
+            element:<MediSettings />,
+          },
+       
+         
+        ],
+      },
+    ]
   );
+  return (
+       <div className="main">
+        <RouterProvider router={browserRouter}></RouterProvider>
+       </div>
+      );
 };
 
 export default App;

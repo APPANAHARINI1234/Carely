@@ -1,0 +1,52 @@
+.notification-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f5fdf4;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h2 {
+    color: #2E865F;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #8BC34A;
+    border-radius: 6px;
+    outline: none;
+}
+
+.enable-btn {
+    background: #2E865F;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.enable-btn:hover {
+    background: #237a4d;
+}
+
+.status-message {
+    margin-top: 10px;
+    font-weight: bold;
+}
