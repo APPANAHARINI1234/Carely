@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket: "carely-50b41.appspot.com",
   messagingSenderId: "859854972990",
   appId: "1:859854972990:web:035bfe233a5fef4620896f",
-  measurementId: "G-NV7SFQQG87",
+  // measurementId: "G-NV7SFQQG87",
 };
 
 let firebaseApp = initializeApp(firebaseConfig);
