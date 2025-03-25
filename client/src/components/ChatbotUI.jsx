@@ -19,7 +19,7 @@ const ChatbotUI = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/chat?message=${encodeURIComponent(input)}&language=${encodeURIComponent(language)}`
+        `https://carely-health-7zfg.onrender.com/chat?message=${encodeURIComponent(input)}&language=${encodeURIComponent(language)}`
       );
       const botMsg = { sender: "bot", structured: response.data };
       setMessages((prev) => [...prev, botMsg]);

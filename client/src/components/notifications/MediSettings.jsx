@@ -72,7 +72,7 @@ function MediSettings() {
             );
 
             // Send notification data to backend (optional)
-            fetch("http://localhost:5000/notify/store-notification", {
+            fetch("https://carely-health-7zfg.onrender.com/notify/store-notification", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(notificationData),

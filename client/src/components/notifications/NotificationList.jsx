@@ -6,7 +6,7 @@ const NotificationList = ({ fsm }) => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/notify/get-notifications?fsm=${fsm}`);
+                const response = await fetch(`https://carely-health-7zfg.onrender.com/notify/get-notifications?fsm=${fsm}`);
                 const data = await response.json();
                 if (data.success) {
                     setNotifications(data.notifications.reverse()); // Show most recent first

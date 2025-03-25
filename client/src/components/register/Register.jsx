@@ -7,7 +7,7 @@ function Register({ onRegisterSuccess }) {
 
   async function onUserRegister(newUser) {
     try {
-      let res = await fetch(`http://localhost:5000/user-api/user`, {
+      let res = await fetch(`https://carely-health-7zfg.onrender.com/user-api/user`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(newUser),

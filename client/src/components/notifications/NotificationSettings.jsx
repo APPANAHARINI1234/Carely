@@ -55,7 +55,7 @@ function NotificationSettings() {
     // Save notification settings to backend
     const saveNotificationSettings = async (token) => {
         try {
-            const response = await fetch("http://localhost:5000/api/save-settings", {
+            const response = await fetch("https://carely-health-7zfg.onrender.com/api/save-settings", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ medicineName, dosage, notifyAt: time, deviceToken: token }),

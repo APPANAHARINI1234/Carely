@@ -36,7 +36,7 @@ function NotificationBell() {
         const fetchNotifications = async () => {
             try {
                 console.log("📡 Fetching notifications for token:", fsm);
-                const response = await fetch(`http://localhost:5000/notify/get-notifications?fsm=${fsm}`);
+                const response = await fetch(`https://carely-health-7zfg.onrender.com/notify/get-notifications?fsm=${fsm}`);
                 const data = await response.json();
                 if (data.success && Array.isArray(data.notifications)) {
                     setNotifications(data.notifications);
@@ -125,7 +125,7 @@ function NotificationBell() {
 
     return (
         <div className="notification-bell">
-            <audio ref={audioRef} src="http://localhost:5173/notification.mp3" preload="auto" playsInline />
+            <audio ref={audioRef} src="https://carely-health.vercel.app/notification.mp3" preload="auto" playsInline />
             {statusMessage && <p className="status-message">{statusMessage}</p>}
             <button ref={bellRef} className="bell-icon" onClick={() => setOpen(!open)}>
                 🔔

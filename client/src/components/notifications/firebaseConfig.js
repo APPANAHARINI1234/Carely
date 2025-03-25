@@ -78,7 +78,7 @@ export const refreshFcmToken = async () => {
       console.log("🔄 Refreshing FCM Token...");
       saveToken(newToken);
 
-      await axios.post("http://localhost:5000/api/update-token", {
+      await axios.post("https://carely-health-7zfg.onrender.com/api/update-token", {
         oldToken,
         newToken,
       });
