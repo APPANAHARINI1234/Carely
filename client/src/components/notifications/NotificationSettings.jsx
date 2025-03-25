@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { requestFcmToken, messaging } from "./firebaseConfig"; // Import Firebase messaging functions
-import "./NotificationSettings.css";
-import { getToken, onMessage } from "firebase/messaging";
+import "./NotificationSettings.css"; // You can style this UI in your NotificationSettings.css file
+import { getToken } from "firebase/messaging";
 
 function NotificationSettings() {
     const [time, setTime] = useState("21:00");
@@ -52,7 +52,7 @@ function NotificationSettings() {
         }
     };
 
-    // Send notification settings to the backend
+    // Save notification settings to backend
     const saveNotificationSettings = async (token) => {
         try {
             const response = await fetch("http://localhost:5000/api/save-settings", {
@@ -73,22 +73,45 @@ function NotificationSettings() {
         <div className="notification-container">
             <h2>🔔 Set Medicine Reminder</h2>
 
-            <div className="input-group">
-                <label>💊 Medicine Name:</label>
-                <input type="text" placeholder="Enter medicine name" value={medicineName} onChange={(e) => setMedicineName(e.target.value)} />
+            <div className="form-section">
+                <div className="input-group">
+                    <label>💊 Medicine Name:</label>
+                    <input
+                        type="text"
+                        placeholder="Enter medicine name"
+                        value={medicineName}
+                        onChange={(e) => setMedicineName(e.target.value)}
+                        className="input-field"
+                    />
+                </div>
+
+                <div className="input-group">
+                    <label>💉 Dosage:</label>
+                    <input
+                        type="text"
+                        placeholder="Enter dosage"
+                        value={dosage}
+                        onChange={(e) => setDosage(e.target.value)}
+                        className="input-field"
+                    />
+                </div>
+
+                <div className="input-group">
+                    <label>⏰ Reminder Time:</label>
+                    <input
+                        type="time"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                        className="input-field"
+                    />
+                </div>
             </div>
 
-            <div className="input-group">
-                <label>💉 Dosage:</label>
-                <input type="text" placeholder="Enter dosage" value={dosage} onChange={(e) => setDosage(e.target.value)} />
-            </div>
-
-            <div className="input-group">
-                <label>⏰ Reminder Time:</label>
-                <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-            </div>
-
-            <button className="enable-btn" onClick={requestNotificationPermission} disabled={loading}>
+            <button
+                className={`enable-btn ${loading ? "loading" : ""}`}
+                onClick={requestNotificationPermission}
+                disabled={loading}
+            >
                 {loading ? "⏳ Setting Reminder..." : "✅ Enable Notifications"}
             </button>
 

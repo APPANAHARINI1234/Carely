@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,25 +11,29 @@
 
     <script>
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "hi,ta,te,kn,ml,gu,mr,bn,pa,ur",
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-          },
-          "google_translate_element"
-        );
+        if (!document.getElementById("google_translate_element").innerHTML.trim()) {
+          new google.translate.TranslateElement(
+            {
+              pageLanguage: "en",
+              includedLanguages: "hi,ta,te,kn,ml,gu,mr,bn,pa,ur",
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            },
+            "google_translate_element"
+          );
+        }
       }
 
       function toggleTranslate() {
         var translateBox = document.getElementById("translator-container");
+        var googleElement = document.getElementById("google_translate_element");
+
+        // Ensure Google Translate is initialized
+        if (!googleElement.innerHTML.trim()) {
+          googleTranslateElementInit();
+        }
 
         // Toggle visibility of Translate box
-        if (translateBox.style.display === "block") {
-          translateBox.style.display = "none";
-        } else {
-          translateBox.style.display = "block";
-        }
+        translateBox.style.display = (translateBox.style.display === "block") ? "none" : "block";
       }
 
       function observeTranslateBanner() {
@@ -48,7 +52,10 @@
         observer.observe(document.body, { childList: true, subtree: true });
       }
 
-      window.onload = observeTranslateBanner;
+      window.addEventListener("load", function () {
+        googleTranslateElementInit();
+        observeTranslateBanner();
+      });
     </script>
 
     <style>
@@ -85,6 +92,16 @@
         border-radius: 8px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         z-index: 1000;
+        min-width: 140px; /* Prevent collapsing */
+      }
+
+      #google_translate_element {
+        min-width: 120px;
+        min-height: 30px;
+      }
+
+      .goog-te-gadget {
+        font-size: 14px !important;
       }
 
       /* Navbar (Initially Hidden) */

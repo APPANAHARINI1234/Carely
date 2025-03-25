@@ -72,7 +72,7 @@ function NotificationBell() {
             audioRef.current.volume = 1.0;
             audioRef.current.currentTime = 0;
             audioRef.current.muted = false;
-            audioRef.current.play().catch(err => console.warn("🔇 Audio blocked:", err));
+            audioRef.current.play().catch(err => console.warn("🔇 Audio playback blocked:", err));
         }
     };
 
@@ -125,7 +125,7 @@ function NotificationBell() {
 
     return (
         <div className="notification-bell">
-            <audio ref={audioRef} src="http://localhost:5173/notification.mp3" preload="auto" muted playsInline />
+            <audio ref={audioRef} src="http://localhost:5173/notification.mp3" preload="auto" playsInline />
             {statusMessage && <p className="status-message">{statusMessage}</p>}
             <button ref={bellRef} className="bell-icon" onClick={() => setOpen(!open)}>
                 🔔
