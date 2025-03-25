@@ -50,7 +50,7 @@ async function sendPushNotification(userToken, medicineName, medicineDosage) {
 
     // Send to backend
     try {
-        const response = await fetch("http://localhost:5000/notify/store-notification", {
+        const response = await fetch("https://carely-health.vercel.app/store-notification", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(notificationData),
