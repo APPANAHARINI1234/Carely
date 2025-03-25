@@ -25,8 +25,15 @@ const Home = () => {
         <div className="feature-card">🩺 Health Insights</div>
         <div className="feature-card">💊 Medicine Reminders</div>
       </section>
+      <p>Chat with MediBot for personalized health insights and remedies.</p>
+<button className="medibot-btn" onClick={() => navigate("/medibot")}>
+  Talk to MediBot
+</button>
       <Footer />
     </div>
   );
 };
 export default Home;
+
+
+

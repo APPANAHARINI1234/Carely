@@ -1,14 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import 'bootstrap/dist/css/bootstrap.css';
-import UserLoginStore from './contexts/UserLoginStore.jsx';
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "bootstrap/dist/css/bootstrap.css";
+import UserLoginStore from "./contexts/UserLoginStore.jsx";
+import { UserProvider } from "./components/UserContext";
 
-createRoot(document.getElementById('root')).render(
-  
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <StrictMode>
     <UserLoginStore>
-      <App/>
-    </UserLoginStore>   
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </UserLoginStore>
   </StrictMode>
-)
+);

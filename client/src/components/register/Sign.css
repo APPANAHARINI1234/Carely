@@ -1,114 +1,114 @@
 .auth-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    /* background: linear-gradient(135deg, rgba(75, 81, 195, 0.15), rgba(0, 184, 255, 0.15)); */
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background: linear-gradient(135deg, rgba(75, 81, 195, 0.15), rgba(0, 184, 255, 0.15)); */
+  box-sizing: border-box;
+}
+
+
+.auth-animation {
+  flex: 1;
+  display: flex;
+  max-width: 600px;
+}
+
+
+.auth-form-container {
+  flex: 1;
+  margin-left : 30px;
+  max-width: 500px;
+  /* background-color: rgba(105, 105, 210, 0.15);  */
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.auth-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+ 
+}
+
+.auth-tab {
+  font-size: 18px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #172d66;
+  transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+  font-weight: bold;
+  /* background-color: #ebebff; */
+  border-radius: 20px;
+}
+
+
+.auth-forms {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.auth-form h3 {
+  color: #172d66;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.auth-form label {
+  font-size: 1.2rem;
+  color: #172d66;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  font-size: 14px;
+}
+
+.auth-form .btn {
+  padding: 12px;
+  background-color: #172d66;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left : 190px;
+}
+
+.auth-form .btn:hover {
+  /* background-color: #cb0980; */
+  color: white;
+}
+
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    flex-direction: column;
   }
-  
-  
+
   .auth-animation {
-    flex: 1;
-    display: flex;
-    max-width: 600px;
+    max-width: 100%;
+    padding-bottom: 20px;
   }
-  
-  
+
   .auth-form-container {
-    flex: 1;
-    margin-left : 30px;
-    max-width: 500px;
-    /* background-color: rgba(105, 105, 210, 0.15);  */
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    padding: 30px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    max-width: 100%;
   }
-  
-  .auth-tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-   
-  }
-  
-  .auth-tab {
-    font-size: 18px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: #172d66;
-    transition: all 0.3s ease;
-  }
-  
-  .auth-tab.active {
-    font-weight: bold;
-    /* background-color: #ebebff; */
-    border-radius: 20px;
-  }
-  
-  
-  .auth-forms {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  
-  .auth-form h3 {
-    color: #172d66;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .auth-form label {
-    font-size: 1.2rem;
-    color: #172d66;
-  }
-  
-  .auth-form input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: #f8f8f8;
-    font-size: 14px;
-  }
-  
-  .auth-form .btn {
-    padding: 12px;
-    background-color: #172d66;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-left : 190px;
-  }
-  
-  .auth-form .btn:hover {
-    /* background-color: #cb0980; */
-    color: white;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .auth-wrapper {
-      flex-direction: column;
-    }
-  
-    .auth-animation {
-      max-width: 100%;
-      padding-bottom: 20px;
-    }
-  
-    .auth-form-container {
-      max-width: 100%;
-    }
-  }
+}

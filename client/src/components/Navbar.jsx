@@ -25,7 +25,7 @@ function Navbar() {
           <Link to="explore">Explore</Link>
         </li>
         <li className="nav-item links">
-          <Link to="assist">Assist</Link>
+          <Link to="medibot">Assist</Link>
         </li>
         <li className="nav-item links">
           <Link to="mediNotify">MediNotify</Link>
