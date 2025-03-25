@@ -80,23 +80,10 @@ function NotificationBell() {
         const unsubscribe = onMessage(messaging, (payload) => {
             console.log("🔔 New notification received:", payload);
             playNotificationSound();
-            const now = new Date();
-            const istTime = new Intl.DateTimeFormat("en-IN", {
-                timeZone: "Asia/Kolkata",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-            }).format(now);
-            const istDate = new Intl.DateTimeFormat("en-IN", {
-                timeZone: "Asia/Kolkata",
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            }).format(now);
             const newNotification = {
                 title: payload.notification?.title || "New Notification",
                 body: payload.notification?.body || "You have a new message!",
-                datetime: `${istDate} ${istTime}`,
+                datetime: payload.notification?.datetime||new Date().toISOString(),
             };
             setNotifications((prev) => [newNotification, ...prev]);
         });

@@ -46,6 +46,7 @@ function MediSettings() {
                 title: payload.notification?.title || "Reminder",
                 body: payload.notification?.body || "Time to take your medicine!",
                 datetime: `${istDate} ${istTime}`,
+                fcmToken:fsm
             };
 
             // ✅ Show toast notification for every message
