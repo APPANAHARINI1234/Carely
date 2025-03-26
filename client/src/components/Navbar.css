@@ -146,3 +146,18 @@
 .clear-btn {
   background: red;
 }
+.logo-imge {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 70px; /* Adjust width as needed */
+  height: auto; /* Maintains aspect ratio */
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
