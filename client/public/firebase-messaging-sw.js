@@ -37,7 +37,7 @@ messaging.onBackgroundMessage(async (payload) => {
   };
 
   try {
-    const response = await fetch("https://carely-health-7zfg.onrender.com/store-notification", {
+    const response = await fetch("https://carely-health-7zfg.onrender.com/notify/store-notification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(notificationData),
