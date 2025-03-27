@@ -1,0 +1,43 @@
+/* Hide the top-left Google Translate toolbar */
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+/* Hide the Google logo and branding */
+.goog-logo-link,
+.goog-te-gadget span {
+    display: none !important;
+}
+
+/* Style the dropdown box */
+#google_translate_element select {
+    background: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Ensure the dropdown is visible */
+.goog-te-combo {
+    display: inline-block !important;
+}
+
+/* General styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(45deg, #8e2de2, #4a00e0, #e0c3fc, #8e2de2);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

@@ -1,0 +1,122 @@
+/* Overall Page Styling */
+.disease-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #ecf8ed; /* Soft pastel green */
+  font-family: "Poppins", sans-serif;
+}
+
+/* Disease Name */
+h2 {
+  text-align: center;
+  color: #146C43; /* Deep green */
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Disease Image */
+.disease-image {
+  display: block;
+  width: 100%;
+  max-width: 500px; /* Increased for better visibility */
+  height: 320px; /* Fixed height for uniformity */
+  object-fit: contain; /* Ensures full image is visible */
+  background-color: white; /* Keeps images clear */
+  border-radius: 10px;
+  margin: 0 auto 30px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 10px; /* Ensures text inside images is visible */
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: #fdfdfd;
+  border-left: 6px solid #198754; /* Rich green border */
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease-in-out;
+}
+
+.section:hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Section Headings */
+h3 {
+  color: #146C43; /* Rich deep green */
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-left: 6px solid #198754;
+  padding-left: 12px;
+}
+
+/* List Styles */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  background: #dff5e1; /* Soft green tint */
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+/* Yoga Section */
+.yoga-grid {
+  display: flex;
+  flex-direction: column; /* One image per row */
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+/* Yoga Item */
+.yoga-item {
+  width: 85%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Yoga Image */
+.yoga-image {
+  width: 100%;
+  max-width: 500px; /* Increased width */
+  height: 320px; /* Fixed height to match disease image */
+  object-fit: contain;
+  background-color: white; /* Keeps contrast for better visibility */
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px; /* Ensures yoga images with text remain clear */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .disease-detail-container {
+    padding: 20px;
+  }
+
+  .yoga-item {
+    width: 100%;
+  }
+
+  .disease-image,
+  .yoga-image {
+    max-width: 90%;
+    height: auto;
+  }
+}
