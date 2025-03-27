@@ -10,7 +10,7 @@ const DiseaseDetail = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/explore/${id}`)
+    axios.get(`https://carely-health-7zfg.onrender.com/api/explore/${id}`)
       .then((response) => {
         if (response.data && response.data.data) {
           setDisease(response.data.data);

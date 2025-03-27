@@ -24,7 +24,7 @@ const Explore = () => {
   const [healthTip, setHealthTip] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/explore")
+    axios.get("https://carely-health-7zfg.onrender.com/api/explore")
       .then((response) => {
         const diseaseData = response.data.data || [];
         setDiseases(diseaseData);
@@ -34,7 +34,7 @@ const Explore = () => {
       })
       .catch(() => console.error("Error fetching diseases"));
 
-    axios.get("http://localhost:5000/api/explore/healthTips/random")
+    axios.get("https://carely-health-7zfg.onrender.com/api/explore/healthTips/random")
       .then((response) => setHealthTip(response.data.tip || "Stay healthy!"))
       .catch(() => console.error("Error fetching health tip"));
   }, []);
