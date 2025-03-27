@@ -8,9 +8,10 @@ import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import Sign from "./components/register/Sign";
 import MediSettings from "./components/notifications/MediSettings";
-import NotificationBell from "./components/notifications/NotificationBell";
 import Explore from "./components/Explore";
 import MediBot from "./components/MediBot";
+import DiseaseDetail from "./components/DiseaseDetail";
+
 
 const browserRouter = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const browserRouter = createBrowserRouter([
       { path: "/mediNotify", element: <MediSettings /> },
       { path: "/explore", element: <Explore /> },
       { path: "/medibot", element: <MediBot /> },
+      { path: "/disease/:id", element: <DiseaseDetail /> },
     ],
   },
 ]);

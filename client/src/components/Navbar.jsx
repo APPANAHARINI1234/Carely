@@ -13,7 +13,7 @@ function Navbar() {
       
       <Link to="/">
         <div className="logo-imge d-flex">
-          <h1>Carely</h1>
+          <img src="/logo.png" alt=""  className="logo"/>
         </div>
       </Link>
       
