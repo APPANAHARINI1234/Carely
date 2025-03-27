@@ -12,6 +12,7 @@ import Explore from "./components/Explore";
 import MediBot from "./components/MediBot";
 import DiseaseDetail from "./components/DiseaseDetail";
 
+
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -32,7 +33,9 @@ const browserRouter = createBrowserRouter([
 
 const App = () => {
   return (
-    <RouterProvider router={browserRouter} />
+    <div className="main">
+      <RouterProvider router={browserRouter} />
+    </div>
   );
 };
 
