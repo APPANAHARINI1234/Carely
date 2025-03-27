@@ -53,8 +53,10 @@ router.get("/get-notifications", async (req, res) => {
         // Fetch notifications where fcmToken matches and sort by timestamp (latest first)
         const notifications = await mediNotify
             .find({ fcmToken: fsm })
-            .sort({ datetime: -1 }) // Sort by timestamp descending
             .toArray();
+
+        // Convert datetime strings to Date objects for proper sorting
+        notifications.sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
 
         console.log("✅ Notifications fetched:", notifications.length);
         res.json({ success: true, notifications });
@@ -64,4 +66,5 @@ router.get("/get-notifications", async (req, res) => {
         res.status(500).json({ success: false, message: "Error fetching notifications", error: error.message });
     }
 });
+
 module.exports = router;

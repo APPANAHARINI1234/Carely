@@ -83,7 +83,7 @@ function NotificationBell() {
             const newNotification = {
                 title: payload.notification?.title || "New Notification",
                 body: payload.notification?.body || "You have a new message!",
-                datetime: payload.notification?.datetime||new Date().toISOString(),
+                datetime: payload.notification?.datetime || new Date().toISOString(),
             };
             setNotifications((prev) => [newNotification, ...prev]);
         });
@@ -102,8 +102,9 @@ function NotificationBell() {
     }, []);
 
     const formatDateTime = (utcDateString) => {
-        if (!utcDateString) return "";
+        if (!utcDateString) return { date: "Date not available", time: "" };
         const date = new Date(utcDateString);
+        if (isNaN(date.getTime())) return { date: "Invalid Date", time: "" };
         const options = { timeZone: "Asia/Kolkata", hour12: true };
         const dateStr = date.toLocaleDateString("en-IN", { ...options, day: "2-digit", month: "2-digit", year: "numeric" });
         const timeStr = date.toLocaleTimeString("en-IN", { ...options, hour: "2-digit", minute: "2-digit", second: "2-digit" });
