@@ -40,6 +40,7 @@ function NotificationBell() {
                 const data = await response.json();
                 if (data.success && Array.isArray(data.notifications)) {
                     setNotifications(data.notifications);
+                    console.log(notifications);
                 } else {
                     console.error("❌ Unexpected response format:", data);
                     setNotifications([]);
@@ -83,9 +84,10 @@ function NotificationBell() {
             const newNotification = {
                 title: payload.notification?.title || "New Notification",
                 body: payload.notification?.body || "You have a new message!",
-                datetime: payload.notification?.datetime||new Date().toISOString(),
+                datetime: payload.notification?.datetime || new Date().toISOString(),
             };
             setNotifications((prev) => [newNotification, ...prev]);
+
         });
         return () => unsubscribe();
     }, []);
@@ -102,13 +104,17 @@ function NotificationBell() {
     }, []);
 
     const formatDateTime = (utcDateString) => {
-        if (!utcDateString) return "";
-        const date = new Date(utcDateString);
-        const options = { timeZone: "Asia/Kolkata", hour12: true };
-        const dateStr = date.toLocaleDateString("en-IN", { ...options, day: "2-digit", month: "2-digit", year: "numeric" });
-        const timeStr = date.toLocaleTimeString("en-IN", { ...options, hour: "2-digit", minute: "2-digit", second: "2-digit" });
-        return { date: dateStr, time: timeStr };
-    };
+    if (!utcDateString) return { date: "Date not available", time: "" };
+    const date = new Date(utcDateString);
+    if (isNaN(date.getTime())) return { date: "Invalid Date", time: "" };
+    const options = { timeZone: "Asia/Kolkata", hour12: true };
+    const dateStr = date.toLocaleDateString("en-IN", { ...options, day: "2-digit", month: "2-digit", year: "numeric" });
+    const timeStr = date.toLocaleTimeString("en-IN", { ...options, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    
+    console.log(dateStr + " " + timeStr); // ✅ Corrected variable name
+    return { date: dateStr, time: timeStr };
+};
+
 
     return (
         <div className="notification-bell">
@@ -124,9 +130,23 @@ function NotificationBell() {
                 <div ref={dropdownRef} className="notification-dropdown">
                     {notifications.length > 0 ? (
                         notifications.map((notif, index) => {
-                            const { date, time } = formatDateTime(notif.datetime);
+                            console.log(notif.datetime)
+                            let date, time;
+
+                            if (notif.datetime.includes("T")) {
+                                ({ date, time } = formatDateTime(notif.datetime)); // Destructuring assignment
+                                console.log(date + " " + time);
+                            } else {
+                                const datetimeParts = notif.datetime.split(" ");
+                                date = datetimeParts[0] || "";
+                                time = datetimeParts[1] || "";
+                            }
+                            
+                            console.log("Extracted Date:", date);
+                            console.log("Extracted Time:", time);
+                            
                             return (
-                                <div key={index} className={`notification-item ${notif.read ? "read" : "unread"}`}>
+                                <div key={index} className={`notification-item`}>
                                     <strong>{notif.title}</strong>
                                     <p>{notif.body}</p>
                                     <small>📅 {date} | 🕒 {time}</small>

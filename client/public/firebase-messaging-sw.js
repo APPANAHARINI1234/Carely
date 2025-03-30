@@ -16,6 +16,11 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(async (payload) => {
   console.log("📩 Received background message:", payload);
 
+  if (!payload.notification) {
+    console.error("❌ Notification payload is missing");
+    return;
+  }
+
   const notificationTitle = payload.notification.title;
   const notificationBody = payload.notification.body;
 
@@ -24,31 +29,18 @@ messaging.onBackgroundMessage(async (payload) => {
     icon: "/firebase-logo.png",
   });
 
-  // Send background notification to backend for storage
-  const now = new Date();
-  const istOffset = 5.5 * 60 * 60 * 1000; // IST Offset in milliseconds
-  const istDate = new Date(now.getTime() + istOffset);
-
-  const notificationData = {
-    title: notificationTitle,
-    body: notificationBody,
-    fcmToken: payload.data?.fcmToken || "", // Ensure token is included if available
-    datetime: istDate.toISOString().slice(0, 16),
-  };
-
-  try {
-    const response = await fetch("https://carely-health-7zfg.onrender.com/notify/store-notification", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(notificationData),
+  // Send the notification data to the active web page
+  self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+    clients.forEach((client) => {
+      client.postMessage({
+        type: "NEW_NOTIFICATION",
+        payload: {
+          title: notificationTitle,
+          body: notificationBody,
+          fcmToken: payload.data?.fcmToken || "",
+          datetime: new Date().toISOString(),
+        },
+      });
     });
-
-    if (response.ok) {
-      console.log("✅ Background notification stored in backend");
-    } else {
-      console.error("❌ Failed to store background notification in backend.");
-    }
-  } catch (error) {
-    console.error("❌ Error sending background notification to backend:", error);
-  }
+  });
 });

@@ -50,7 +50,7 @@ async function sendPushNotification(userToken, medicineName, medicineDosage) {
 
     // Send to backend
     try {
-        const response = await fetch("https://carely-health-7zfg.onrender.com/store-notification", {
+        const response = await fetch("https://carely-health-7zfg.onrender.com/notify/store-notification", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(notificationData),
@@ -59,7 +59,7 @@ async function sendPushNotification(userToken, medicineName, medicineDosage) {
         if (response.ok) {
             console.log("✅ Notification stored in backend");
         } else {
-            console.error("❌ Failed to store notification in backend.");
+            console.error("❌ Failed to store notification in backendddd.");
         }
     } catch (error) {
         console.error("❌ Error sending notification to backend:", error);
