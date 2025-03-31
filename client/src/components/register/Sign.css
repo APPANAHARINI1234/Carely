@@ -3,10 +3,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background: linear-gradient(135deg, rgba(75, 81, 195, 0.15), rgba(0, 184, 255, 0.15)); */
   box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.15), rgba(72, 202, 228, 0.15)); /* Updated gradient */
 }
-
 
 .auth-animation {
   flex: 1;
@@ -14,12 +13,11 @@
   max-width: 600px;
 }
 
-
 .auth-form-container {
   flex: 1;
-  margin-left : 30px;
+  margin-left: 30px;
   max-width: 500px;
-  /* background-color: rgba(105, 105, 210, 0.15);  */
+  background-color: rgba(72, 202, 228, 0.1); /* Light blue background */
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   padding: 30px 30px;
@@ -32,7 +30,6 @@
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
- 
 }
 
 .auth-tab {
@@ -42,25 +39,23 @@
   background-color: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  color: #172d66;
+  color: #03045e; /* Dark blue text */
   transition: all 0.3s ease;
 }
 
 .auth-tab.active {
   font-weight: bold;
-  /* background-color: #ebebff; */
   border-radius: 20px;
+  border-bottom: 2px solid #00b4d8; /* Bright blue border for active tab */
 }
-
 
 .auth-forms {
   display: flex;
   flex-direction: column;
 }
 
-
 .auth-form h3 {
-  color: #172d66;
+  color: #03045e; /* Dark blue header */
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
@@ -68,7 +63,7 @@
 
 .auth-form label {
   font-size: 1.2rem;
-  color: #172d66;
+  color: #03045e; /* Dark blue text */
 }
 
 .auth-form input {
@@ -83,24 +78,23 @@
 
 .auth-form .btn {
   padding: 12px;
-  background-color: #172d66;
+  background-color: #03045e; /* Dark blue button */
   color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left : 190px;
+  margin-left: 190px;
 }
 
 .auth-form .btn:hover {
-  /* background-color: #cb0980; */
-  color: white;
+  background-color: #00b4d8; /* Light blue button hover */
 }
-
 
 @media (max-width: 768px) {
   .auth-wrapper {
     flex-direction: column;
+    padding: 20px;
   }
 
   .auth-animation {
@@ -110,5 +104,11 @@
 
   .auth-form-container {
     max-width: 100%;
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .auth-form .btn {
+    margin-left: 0;
   }
 }

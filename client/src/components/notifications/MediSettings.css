@@ -1,11 +1,43 @@
+.medi-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f8ff; /* Light background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-.medi{
-    background-image: url("https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg");
-    background-size: cover;   /* Ensures full coverage */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents tiling */
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    
-  }
-  
+.medi-card {
+    background-color: #ffffff; /* White card */
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.medi-title {
+    color: #0077b6; /* Primary color for the title */
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.medi-card .MuiButtonBase-root {
+    padding: 15px;
+    background-color: #00b4d8; /* Light Blue color */
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.medi-card .MuiButtonBase-root:hover {
+    background-color: #0096c7; /* Darker Blue on hover */
+}
+
+.Toastify__toast-container {
+    z-index: 9999;
+}
