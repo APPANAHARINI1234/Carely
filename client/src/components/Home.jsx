@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Parallax } from "react-parallax"; // Import the Parallax component from react-parallax
 import "./Home.css"; // Import your CSS file
 import {Link} from "react-router-dom"
-import Carousel from "./Carousel";
+
 const Home = () => {
   const sectionsRef = useRef([]);
 
