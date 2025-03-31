@@ -41,7 +41,8 @@ function MediSettings() {
                 month: "2-digit",
                 year: "numeric",
             }).format(now);
-
+            console.log(fsm);
+            console.log(localStorage.getItem("fcm_token"))
             const notificationData = {
                 title: payload.notification?.title || "Reminder",
                 body: payload.notification?.body || "Time to take your medicine!",
@@ -73,11 +74,9 @@ function MediSettings() {
             );
 
             // Send notification data to backend (optional)
-            fetch("https://carely-health-7zfg.onrender.com/notify/store-notification", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(notificationData),
-            }).catch((err) => console.error("❌ Error sending notification to backend:", err));
+           
+            
+           
         };
 
         // ✅ Ensure continuous listening for notifications
