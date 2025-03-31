@@ -3,7 +3,7 @@ import { requestFcmToken, onMessageListener } from "./firebaseConfig";
 import NotificationSettings from "./NotificationSettings";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import styles
-
+import './MediSettings.css'
 function MediSettings() {
     const [fsm, setFsm] = useState(localStorage.getItem("fcm_token") || "");
 
@@ -95,7 +95,7 @@ function MediSettings() {
     }, []);
 
     return (
-        <div style={{ textAlign: "center", padding: "20px" }}>
+        <div class="medi"style={{ textAlign: "center", padding: "20px" }}>
             <h1>📅 Medicine Reminder App</h1>
             <NotificationSettings />
             {/* ✅ Toast Notification Container */}

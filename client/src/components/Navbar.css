@@ -1,163 +1,96 @@
-/* Header container */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header (Navbar) */
 .header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ebebff;
-  padding: 10px 20px;
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+  z-index: 100;
+  background-color: black;
 }
 
-/* Logo styling */
-.logo-imge {
+/* Logo */
+.logo img {
+  height: 50px;
+}
+
+/* Navigation Links */
+.nav {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  list-style: none;
+  background: transparent; /* Remove any background color */
 }
 
-.logo-imge .logo-img {
-  width: 130px;
+.nav-item {
+  margin: 0; /* Ensure no extra spacing */
+  padding: 0;
 }
 
-.logo-imge h1 {
-  background: -webkit-linear-gradient(#cb0980, #29b1db);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.5rem;
-  text-shadow: #ebebff;
+.nav-item a {
   text-decoration: none;
-  font-family: "Playwrite GB S", cursive;
-  margin: 0;
-}
-
-/* Links styling */
-.header .links {
-  display: flex;
-  gap: 15px;
-}
-
-.header .links a {
-  color: #172d66;
-  text-decoration: none;
-  font-size: 1.3rem;
-  padding: 5px;
+  font-size: 16px;
   font-weight: 500;
+  padding: 10px 20px;
+  color: white; /* White color for better visibility */
+  transition: color 0.3s ease;
+  background: transparent !important; /* Ensures no background color */
 }
 
-.header .links a:hover {
-  color: #ffffff;
-  background-color: #172d66;
-  border-radius: 10px;
-  transition: all 0.2s ease-in-out;
+.nav-item a:hover,
+.nav-item a:focus,
+.nav-item a:active {
+  color: #ddd; /* Slightly dimmed white on hover */
+  background: none !important; /* Remove any background highlight */
+  outline: none; /* Remove focus outline */
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .header {
-      flex-direction: column;
-      align-items: flex-start;
-  }
-
-
-  .links {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-  }
-
-  /* Toggle menu open */
-  .header.open .links {
-      display: flex;
-  }
-}
-
-/* Smaller screen adjustments */
-@media (max-width: 480px) {
-  .logo-imge .logo-img {
-      width: 100px;
-  }
-
-  .logo-imge h1 {
-      font-size: 1.2rem;
-  }
-
-  .header .links a {
-      font-size: 1.1rem;
-      padding: 8px;
-  }
-}
-.notification-bell {
-  font-size: 24px;
-  color: #333;
-  transition: transform 0.3s ease-in-out;
-}
-
-.notification-bell.shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-  0% { transform: rotate(0); }
-  25% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-  75% { transform: rotate(-10deg); }
-  100% { transform: rotate(0); }
-}
-
-.notification-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px 8px;
-  font-size: 12px;
-}
-
-.notifications-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  width: 250px;
-  border-radius: 5px;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.mark-read-btn, .clear-btn {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 5px 10px;
+/* Hamburger Menu (For Mobile) */
+.menu-icon {
+  display: none;
   cursor: pointer;
-  margin: 5px;
-  border-radius: 5px;
+  font-size: 24px;
+  color: white;
 }
 
-.clear-btn {
-  background: red;
-}
-.logo-imge {
-  display: flex;
-  align-items: center;
-}
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
 
-.logo {
-  width: 70px; /* Adjust width as needed */
-  height: auto; /* Maintains aspect ratio */
-  object-fit: contain;
-  transition: transform 0.3s ease-in-out;
-}
+  .nav {
+    width: 0;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.2); /* Light transparency */
+    backdrop-filter: blur(10px);
+    transition: width 0.3s ease-in;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.logo:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
+  .nav.active {
+    width: 250px;
+  }
+
+  .nav-item {
+    margin: 20px 0;
+  }
+
+  .nav-item a {
+    font-size: 18px;
+    padding: 12px 25px;
+  }
 }

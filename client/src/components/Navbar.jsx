@@ -1,51 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
-import { useContext } from 'react';
-import { userLoginContext } from '../contexts/userLoginContext';
-import NotificationBell from './notifications/NotificationBell'; // Import Notification Bell
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { userLoginContext } from "../contexts/userLoginContext";
+import NotificationBell from "./notifications/NotificationBell"; 
+import "./Navbar.css";
 
 function Navbar() {
-  let { logoutUser, userLoginStatus } = useContext(userLoginContext); 
+  const { logoutUser, userLoginStatus } = useContext(userLoginContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className='header d-flex justify-content-between align-items-center'>
-      
+    <div className="header">
+      {/* Logo */}
       <Link to="/">
-        <div className="logo-imge d-flex">
-          <img src="/logo.png" alt=""  className="logo"/>
+        <div className="logo d-flex">
+          <img src="/logo.png" alt="Carely Logo" />
         </div>
       </Link>
-      
-      <ul className="nav d-flex gap-3">
-        <li className="nav-item links">
-          <Link to="/">Home</Link>
+
+      {/* Hamburger Menu Icon */}
+      <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
+
+      {/* Navigation Links */}
+      <ul className={`nav d-flex ${menuOpen ? "active" : ""}`}>
+        <li className="nav-item">
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         </li>
-        <li className="nav-item links">
-          <Link to="explore">Explore</Link>
+        <li className="nav-item">
+          <Link to="explore" onClick={() => setMenuOpen(false)}>Explore</Link>
         </li>
-        <li className="nav-item links">
-          <Link to="medibot">Assist</Link>
+        <li className="nav-item">
+          <Link to="medibot" onClick={() => setMenuOpen(false)}>Assist</Link>
         </li>
-        <li className="nav-item links">
-          <Link to="mediNotify">MediNotify</Link>
+        <li className="nav-item">
+          <Link to="mediNotify" onClick={() => setMenuOpen(false)}>MediNotify</Link>
         </li>
 
-        {userLoginStatus === false ? (
-          <li className="nav-item links">
-            <Link to="auth">Login/Register</Link>
+        {/* Conditional Login/Logout */}
+        {userLoginStatus ? (
+          <li className="nav-item">
+            <Link to="auth" onClick={() => { logoutUser(); setMenuOpen(false); }}>
+              Logout
+            </Link>
           </li>
         ) : (
-          <>
-            <li className="nav-item links">
-              <Link to="auth" onClick={logoutUser}>Logout</Link>
-            </li>
-          </>
+          <li className="nav-item">
+            <Link to="auth" onClick={() => setMenuOpen(false)}>Login/Register</Link>
+          </li>
         )}
       </ul>
 
-      {/* Notification Bell Component */}
-      <div className="nav-item links">
+      {/* Notification Bell */}
+      <div className="nav-item">
         <NotificationBell />
       </div>
     </div>

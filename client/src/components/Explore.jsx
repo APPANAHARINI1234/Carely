@@ -17,6 +17,7 @@ const DiseaseCard = ({ disease }) => {
 };
 
 const Explore = () => {
+  
   const [diseases, setDiseases] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("A-Z");
