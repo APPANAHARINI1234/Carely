@@ -1,197 +1,209 @@
-/* General Page Styling */
+/* General Styling */
 :root {
-  --primary-color: #166534;
-  --secondary-color: #e6f4ea;
+  --primary-blue: #0077B6;
+  --secondary-blue: #90E0EF;
   --text-color: #333;
   --bg-color: #f8f8f8;
-  --card-bg: #e2f1e8;
+  --card-bg: #ffffff;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+/* Main Page Layout */
 .explore-container {
-  max-width: 1200px;
-  margin: auto;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
   padding: 20px;
-  text-align: center;
-  background-color: var(--bg-color);
-  transition: background 0.3s ease-in-out;
 }
 
-/* Header */
-.explore-header {
-  font-size: 2rem;
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  font-weight: bold;
+/* Left Section - Disease Cards */
+.disease-section {
+  flex: 3;
 }
 
-/* Search & Filter Section */
+/* Right Section - Sidebar (Featured, Health Tip) */
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Search & Filter */
 .search-sort-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
+  flex-direction: column;
+  width: 100%;
 }
 
-.search-bar {
-  padding: 10px;
-  font-size: 1rem;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  background: var(--bg-color);
-  color: var(--text-color);
-  width: 70%;
-  max-width: 400px;
-  transition: border-color 0.3s, background 0.3s;
-}
-
+.search-bar,
 .filter-dropdown {
   padding: 10px;
   font-size: 1rem;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary-blue);
   border-radius: 8px;
-  background: var(--secondary-color);
+  background-color: white;
   color: var(--text-color);
-  transition: all 0.3s ease-in-out;
-  width: 180px;
-  cursor: pointer;
-  text-align: center;
-  font-weight: 500;
-  box-shadow: 2px 2px 5px var(--shadow-color);
 }
 
+.search-bar:hover,
 .filter-dropdown:hover {
-  background: var(--primary-color);
-  color: white;
+  border-color: var(--secondary-blue);
+  color: var(--primary-blue);
 }
 
-.filter-dropdown:focus {
-  background: var(--secondary-color) !important;
-  color: var(--text-color) !important;
-  outline: none;
+.filter-dropdown {
+  cursor: pointer;
 }
 
-/* Disease Grid */
+/* Add spacing between search bar and disease cards */
+.search-bar {
+  margin-bottom: 20px;
+}
+
+/* Grid Layout for Disease Cards */
 .disease-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  align-items: stretch;
 }
 
-/* Disease Card - Increased Width */
+/* Disease Card */
 .disease-card {
+  background: var(--card-bg);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: var(--card-bg);
+  justify-content: space-between; /* Ensures even spacing */
   border-radius: 10px;
   padding: 15px;
   text-align: center;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: 0px 4px 6px var(--shadow-color);
-  width: 340px;  /* Increased width */
-  min-height: 420px;
   color: var(--text-color);
+  border-left: 4px solid var(--primary-blue);
+  height: 100%; /* Ensures equal height for all cards */
 }
 
-.disease-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px var(--shadow-color);
+/* Disease Heading */
+.disease-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--primary-blue);
+  text-align: center;
 }
 
+/* Disease Info */
+.disease-info {
+  flex-grow: 1; /* Pushes content above the button */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers text */
+  justify-content: space-between; /* Ensures even spacing */
+  text-align: center;
+}
+
+/* Disease Image */
 .disease-image {
   width: 100%;
-  height: 230px;
-  object-fit: contain;
-  aspect-ratio: 16/9;
-  background-color: var(--secondary-color);
+  height: 200px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
-.disease-info {
-  flex-grow: 1;
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.disease-info h3 {
-  color: var(--primary-color);
-  font-size: 1.3rem;
-}
-
-.disease-card p {
-  min-height: 45px;
-  font-size: 0.95rem;
-  color: var(--text-color);
-}
-
+/* "Read More" Button */
 .read-more {
   display: inline-block;
-  margin-top: 8px;
+  margin-top: auto; /* Pushes button to the bottom */
   padding: 8px 12px;
-  background-color: var(--primary-color);
+  background-color: var(--primary-blue);
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: 0.9rem;
   transition: background 0.3s ease-in-out;
+  text-align: center;
+  width: max-content; /* Keeps button size small */
 }
 
 .read-more:hover {
-  background-color: #14833b;
+  background-color: #005f8c;
 }
 
-/* Featured Disease & Health Tip - Optimized */
-.featured-disease, .health-tip-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--card-bg);
-  border: 2px solid var(--primary-color);
+/* Featured Disease */
+.featured-disease {
+  background: white;
   border-radius: 10px;
   padding: 15px;
   box-shadow: 2px 2px 8px var(--shadow-color);
-  text-align: center;
-  margin: 15px auto;
-  width: 85%;
-  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  border: solid thin var(--secondary-blue);
+  background-color: #f0f9ff; /* Light blue background */
 }
 
-.featured-disease h3, .health-tip-box h3 {
-  color: var(--primary-color);
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-}
-
-.featured-disease p, .health-tip-box p {
-  font-size: 1rem;
+.featured-disease h3 {
+  font-size: 1.5rem;
   color: var(--text-color);
-  line-height: 1.4;
 }
 
-/* Responsive Fixes */
-@media (max-width: 768px) {
+.featured-disease p {
+  color: var(--text-color);
+}
+
+.know-more-button {
+  padding: 8px 12px;
+  background-color: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.know-more-button:hover {
+  background-color: #005f8c;
+}
+
+/* Health Tip */
+.health-tip-box {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 2px 2px 8px var(--shadow-color);
+  width: 100%;
+  border: solid thin var(--secondary-blue);
+  background-color: #e0f7fa; /* Light cyan background */
+}
+
+.health-tip-box h3 {
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.health-tip-box p {
+  color: var(--text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .disease-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .explore-container {
     flex-direction: column;
-    align-items: center;
   }
 
-  .search-bar, .filter-dropdown {
-    width: 85%;
+  .disease-grid {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for mobile */
   }
 
-  .disease-card {
-    width: 90%;
-    min-height: auto;
+  .sidebar {
+    flex-direction: column;
   }
-
-  .featured-disease, .health-tip-box {
-    width: 95%;
-  }
-}  
+}

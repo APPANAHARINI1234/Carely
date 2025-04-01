@@ -11,7 +11,6 @@ import MediSettings from "./components/notifications/MediSettings";
 import Explore from "./components/Explore";
 import MediBot from "./components/MediBot";
 import DiseaseDetail from "./components/DiseaseDetail";
-import NotificationBell from "./components/notifications/NotificationBell"; // Import the notification bell component
 
 import { requestFcmToken, messaging } from "../src/components/notifications/firebaseConfig";
 import { getToken, onMessage } from "firebase/messaging";
@@ -79,7 +78,6 @@ const App = () => {
 
   return (
     <div className="main">
-    
       <RouterProvider router={browserRouter} />
     </div>
   );
