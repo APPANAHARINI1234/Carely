@@ -15,15 +15,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 10px 30px; /* Reduced padding */
   background: rgba(255, 255, 255, 0.1); /* Light transparent background */
   z-index: 100;
-  background-color: black;
 }
 
 /* Logo */
 .logo img {
-  height: 50px;
+  height: 40px; /* Adjusted height */
 }
 
 /* Navigation Links */
@@ -38,16 +37,14 @@ body {
   padding: 0;
 }
 
-.nav-item a {
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 10px 20px;
-  color: white; /* White color for better visibility */
-  transition: color 0.3s ease;
-  background: transparent !important; /* Ensures no background color */
-}
 
+.nav-item a {
+    text-decoration: none;
+    font-size: 23px; /* Increase font size */
+    font-weight: 600; /* Make it bolder */
+    padding: 12px 25px;
+    transition: color 0.3s ease;
+  }
 .nav-item a:hover,
 .nav-item a:focus,
 .nav-item a:active {
@@ -60,8 +57,15 @@ body {
 .menu-icon {
   display: none;
   cursor: pointer;
-  font-size: 24px;
-  color: white;
+  font-size: 30px; /* Increased font size */
+  color: #ffffff; /* White color */
+  padding: 10px;
+  border-radius: 5px; /* Optional: adds rounded corners */
+  background-color: rgba(0, 0, 0, 0.6); /* Dark background for visibility */
+}
+
+.menu-icon:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Slight hover effect */
 }
 
 /* Mobile Responsiveness */
@@ -73,12 +77,16 @@ body {
   .nav {
     width: 0;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.2); /* Light transparency */
+    background: rgba(255, 255, 255, 0.9); /* Adjusted background */
     backdrop-filter: blur(10px);
     transition: width 0.3s ease-in;
     overflow: hidden;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101; /* Ensure the menu is on top */
   }
 
   .nav.active {
@@ -88,9 +96,12 @@ body {
   .nav-item {
     margin: 20px 0;
   }
-
-  .nav-item a {
-    font-size: 18px;
-    padding: 12px 25px;
-  }
+ 
+    .nav-item a {
+      font-size: 20px; /* Larger font for mobile */
+      padding: 15px 30px;
+    }
+  
+  
+  
 }

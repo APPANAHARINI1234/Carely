@@ -103,17 +103,22 @@ const ChatbotUI = () => {
       <div className="chat-header">MediBot Chat</div>
       <div className="language-select">
         <label htmlFor="language">Select Language: </label>
-        <select id="language" value={language} onChange={(e) => setLanguage(e.target.value)}>
+        <select
+          id="language"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        >
           <option value="English">English</option>
           <option value="Hindi">Hindi</option>
           <option value="Telugu">Telugu</option>
         </select>
-        <button className="voice-button" onClick={handleVoiceInput}>🎤 Voice</button>
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
-            <div className="bubble">{msg.sender === "bot" ? renderBotMessage(msg) : msg.text}</div>
+            <div className="bubble">
+              {msg.sender === "bot" ? renderBotMessage(msg) : msg.text}
+            </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
@@ -126,7 +131,14 @@ const ChatbotUI = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
         />
-        <button onClick={sendMessage} disabled={loading}>{loading ? "Typing..." : "Send"}</button>
+        <div className="buttons">
+          <button onClick={sendMessage} disabled={loading}>
+            {loading ? "Typing..." : "Send"}
+          </button>
+          <button className="voice-button" onClick={handleVoiceInput}>
+            🎤 Voice
+          </button>
+        </div>
       </div>
     </div>
   );

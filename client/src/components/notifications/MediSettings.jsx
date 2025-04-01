@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { requestFcmToken, onMessageListener } from "./firebaseConfig";
 import NotificationSettings from "./NotificationSettings";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import styles
-import './MediSettings.css'
+import "react-toastify/dist/ReactToastify.css";
+import { Card, CardContent, Typography, IconButton } from "@mui/material";
+
+// Use emoji icon instead of Material UI icon
+const BellIcon = () => <span style={{ fontSize: "2rem" }}>🔔</span>;
+
+import "./MediSettings.css";
+
 function MediSettings() {
     const [fsm, setFsm] = useState(localStorage.getItem("fcm_token") || "");
 
@@ -41,16 +47,15 @@ function MediSettings() {
                 month: "2-digit",
                 year: "numeric",
             }).format(now);
-            console.log(fsm);
-            console.log(localStorage.getItem("fcm_token"))
+
             const notificationData = {
                 title: payload.notification?.title || "Reminder",
                 body: payload.notification?.body || "Time to take your medicine!",
                 datetime: `${istDate} ${istTime}`,
-                fcmToken:fsm
+                fcmToken: fsm,
             };
 
-            // ✅ Show toast notification for every message
+            // ✅ Modern Toast Notification
             toast.info(
                 <div style={{ textAlign: "left", padding: "10px", maxWidth: "300px", lineHeight: "1.5" }}>
                     <strong>{notificationData.title}</strong>
@@ -72,14 +77,8 @@ function MediSettings() {
                     style: { maxWidth: "320px", wordWrap: "break-word" },
                 }
             );
-
-            // Send notification data to backend (optional)
-           
-            
-           
         };
 
-        // ✅ Ensure continuous listening for notifications
         const listenForNotifications = async () => {
             while (true) {
                 try {
@@ -95,9 +94,18 @@ function MediSettings() {
     }, []);
 
     return (
-        <div class="medi"style={{ textAlign: "center", padding: "20px" }}>
-            <h1>📅 Medicine Reminder App</h1>
-            <NotificationSettings />
+        <div className="medi-container">
+            {/* ✅ Beautiful Card Design */}
+            <Card className="medi-card">
+                <CardContent>
+                    <Typography variant="h4" className="medi-title">
+                        Medicine Reminder
+                    </Typography>
+                   
+                    <NotificationSettings />
+                </CardContent>
+            </Card>
+
             {/* ✅ Toast Notification Container */}
             <ToastContainer />
         </div>

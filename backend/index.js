@@ -1,17 +1,99 @@
-const exp = require("express"); // Use only exp() for express app
-const app = exp();
-require("./cronJobs"); 
+const express = require("express");
+const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
-app.use(exp.json()); // This parses incoming JSON requests
-app.use(exp.urlencoded({ extended: true })); // Optional: Supports URL-encoded bodies
+const axios = require("axios");
 
-const PORT = 5000;
+// ✅ Middleware
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
+// ✅ Environment Variables
+const PORT = process.env.PORT || 5000;
+const API_KEY = process.env.GEMINI_API_KEY;
+const MONGO_URL = process.env.MONGO_URL;
+const DB_NAME = process.env.DB_NAME || "Carely";
+
+// ✅ API URL (Fixed Interpolation)
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
+console.log("Loaded API Key:", API_KEY ? "YES" : "NO");
+
+// ✅ Root Route
+app.get("/", (req, res) => {
+  res.send("Server is running. Use /chat?message=your-message to chat.");
+});
+
+// ✅ Chatbot API Route
+app.get("/chat", async (req, res) => {
+  const userMessage = req.query.message;
+  const language = req.query.language || "English"; // Default to English
+
+  if (!userMessage) {
+    return res.status(400).json({ error: "Message is required" });
+  }
+
+  try {
+    // ✅ Improved prompt to force JSON output
+    const prompt = `The user says: "${userMessage}" in ${language}.
+    
+    Return ONLY the following JSON structure:
+    {
+      "possibleConditions": ["List of possible conditions"],
+      "earlySigns": "Description of early signs",
+      "causes": "Brief explanation of causes",
+      "remedies": ["List of remedies"],
+      "yogaTips": "Yoga exercises that can help",
+      "precautions": "Precautions to follow"
+    }
+
+    Strictly return ONLY the JSON object. No extra text, explanation, or formatting.
+    `;
+
+    // ✅ API Call
+    const response = await axios.post(
+      API_URL,
+      { contents: [{ parts: [{ text: prompt }] }] },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    const rawReply = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
+    console.log("Raw Gemini reply:", rawReply);
+
+    if (!rawReply) {
+      return res.status(500).json({ error: "No reply from Gemini API" });
+    }
+
+    // ✅ Extract JSON from response using regex (removes extra characters)
+    const jsonMatch = rawReply.match(/{[\s\S]*}/);
+    if (!jsonMatch) {
+      throw new Error("Response does not contain valid JSON");
+    }
+
+    const cleanedReply = jsonMatch[0];
+    const structuredResponse = JSON.parse(cleanedReply);
+
+    res.json(structuredResponse);
+  } catch (error) {
+    console.error("Gemini API error:", error.response ? error.response.data : error.message);
+    
+    // ✅ Return a fallback error message instead of crashing
+    res.status(500).json({
+      error: "Failed to fetch chatbot response. Please try again later.",
+    });
+  }
+});
 
 // ✅ CORS Configuration
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5000","https://carely-health.vercel.app","https://carely-health-7zfg.onrender.com"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5000",
+  "https://carely-health.vercel.app",
+  "https://carely-health-7zfg.onrender.com"
+];
+
 app.use(
   cors({
     origin: allowedOrigins,
@@ -20,52 +102,55 @@ app.use(
   })
 );
 
-// ✅ Import user routes before DB connection
+// ✅ Importing API Routes
 const userApp = require("./API/userAPI");
-const mediApp=require("./API/medicineAPI");
-const notifyApp=require("./API/mediNotification");
+const mediApp = require("./API/medicineAPI");
+const notifyApp = require("./API/mediNotification");
 
-
-
-// ✅ Pass collections correctly to explore.js
-
-
- 
+// ✅ Register Routes
 app.use("/user-api", userApp);
-app.use("/api",mediApp)
-app.use("/notify",notifyApp);
-  // ✅ Ensure collections exist
-  
+app.use("/api", mediApp);
+app.use("/notify", notifyApp);
+
 // ✅ MongoDB Connection
-const mongoclient = new MongoClient(process.env.MONGO_URL);
+const mongoclient = new MongoClient(MONGO_URL);
+
 mongoclient
   .connect()
   .then((connectionObj) => {
     console.log("✅ DB CONNECTION SUCCESS!");
 
-    // Connect to the database
-    const db = connectionObj.db("Carely");
+    // ✅ Database & Collections
+    const db = connectionObj.db(DB_NAME);
     const exploreCollection = db.collection("Explore");
-      const healthTipsCollection = db.collection("healthTips");
-    const exploreRouter = require("./API/explore")(exploreCollection, healthTipsCollection);
-    app.use("/api/explore", exploreRouter);
-    
-    // Connect to collections
+    const healthTipsCollection = db.collection("healthTips");
     const usersCollection = db.collection("Users");
-    app.set("usersCollection",usersCollection);
-    const mediCollection=db.collection("mediNotify")
-    app.set("mediCollection",mediCollection);
-    const notifyCollection=db.collection("notifications");
-    app.set("notifyCollection",notifyCollection);
-    
+    const mediCollection = db.collection("mediNotify");
+    const notifyCollection = db.collection("notifications");
+
     if (!exploreCollection || !healthTipsCollection) {
       throw new Error("❌ Collections not found in the database!");
     }
-    app.listen(PORT, () => console.log(`🚀 HTTP server started at port ${PORT}`));
+
+    // ✅ Set collections for other routes
+    app.set("usersCollection", usersCollection);
+    app.set("mediCollection", mediCollection);
+    app.set("notifyCollection", notifyCollection);
+
+    // ✅ Load Explore API
+    const exploreRouter = require("./API/explore")(exploreCollection, healthTipsCollection);
+    app.use("/api/explore", exploreRouter);
+
+    // ✅ Start Server
+    app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`));
   })
   .catch((err) => {
-    console.error("❌ Error in DB Connection:", err);
+    console.error("❌ DB Connection Error:", err);
     process.exit(1); // Stop server if DB connection fails
   });
 
-  
+// ✅ Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
