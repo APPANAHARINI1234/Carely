@@ -4,12 +4,6 @@ import NotificationSettings from "./NotificationSettings";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, CardContent, Typography, IconButton } from "@mui/material";
-
-// Use emoji icon instead of Material UI icon
-const BellIcon = () => <span style={{ fontSize: "2rem" }}>🔔</span>;
-
-import "./MediSettings.css";
-
 function MediSettings() {
     const [fsm, setFsm] = useState(localStorage.getItem("fcm_token") || "");
 
@@ -48,19 +42,14 @@ function MediSettings() {
                 year: "numeric",
             }).format(now);
 
-            const notificationData = {
-                title: payload.notification?.title || "Reminder",
-                body: payload.notification?.body || "Time to take your medicine!",
-                datetime: `${istDate} ${istTime}`,
-                fcmToken: fsm,
-            };
+            console.log(fsm);
+            console.log(localStorage.getItem("fcm_token"));
 
-            // ✅ Modern Toast Notification
             toast.info(
                 <div style={{ textAlign: "left", padding: "10px", maxWidth: "300px", lineHeight: "1.5" }}>
-                    <strong>{notificationData.title}</strong>
+                    <strong>{payload.notification?.title || "Reminder"}</strong>
                     <br />
-                    {notificationData.body}
+                    {payload.notification?.body || "Time to take your medicine!"}
                     <br /><br />
                     <strong>🕒 Time:</strong> {istTime}
                     <br />
@@ -95,20 +84,15 @@ function MediSettings() {
 
     return (
         <div className="medi-container">
-            {/* ✅ Beautiful Card Design */}
-            <Card className="medi-card">
-                <CardContent>
-                    <Typography variant="h4" className="medi-title">
-                        Medicine Reminder
-                    </Typography>
-                   
-                    <NotificationSettings />
+             <Card className="medi-card">
+             <CardContent>
+                <h1 className="medi-title">📅 Medicine Reminder</h1>
+                <NotificationSettings />
+                <ToastContainer />
                 </CardContent>
-            </Card>
-
-            {/* ✅ Toast Notification Container */}
-            <ToastContainer />
-        </div>
+                </Card>
+            </div>
+        
     );
 }
 

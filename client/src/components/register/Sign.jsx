@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sign.css';
 import Login from '../login/Login';
 import Register from './Register';
-
+import { motion } from 'framer-motion';
 
 function Signin() {
   const [activeTab, setActiveTab] = useState('login');
@@ -15,13 +15,14 @@ function Signin() {
     setActiveTab('login');
   };
 
-  
-
   return (
     <div className="auth-wrapper">
-    
-
-      <div className="auth-form-container">
+      <motion.div 
+        className="auth-container" 
+        initial={{ opacity: 0, y: -50 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.5 }}
+      >
         <div className="auth-tabs">
           <button
             className={`auth-tab ${activeTab === 'login' ? 'active' : ''}`}
@@ -37,14 +38,18 @@ function Signin() {
           </button>
         </div>
 
-        <div className="auth-forms">
+        <div className="auth-form-wrapper">
           {activeTab === 'login' ? (
-            <Login />
+            <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+              <Login />
+            </motion.div>
           ) : (
-            <Register onRegisterSuccess={handleRegistrationSuccess} />
+            <motion.div key="register" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+              <Register onRegisterSuccess={handleRegistrationSuccess} />
+            </motion.div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
