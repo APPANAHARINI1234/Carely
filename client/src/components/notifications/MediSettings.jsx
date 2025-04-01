@@ -84,14 +84,15 @@ function MediSettings() {
 
     return (
         <div className="medi-container">
-             <Card className="medi-card">
-             <CardContent>
-                <h1 className="medi-title">📅 Medicine Reminder</h1>
-                <NotificationSettings />
-                <ToastContainer />
-                </CardContent>
-                </Card>
-            </div>
+  <Card className="medi-card">
+    <CardContent style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+      <h1 className="medi-title">📅 Medicine Reminder</h1>
+      <NotificationSettings />
+      <ToastContainer />
+    </CardContent>
+  </Card>
+</div>
+
         
     );
 }

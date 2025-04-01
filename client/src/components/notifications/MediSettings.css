@@ -11,7 +11,7 @@
 .medi-card {
     background-color: #ffffff; /* White card */
     border-radius: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: none; /* Remove box shadow */
     width: 100%;
     max-width: 500px;
     margin: 20px;
@@ -19,12 +19,18 @@
     text-align: center;
 }
 
+
+
 .medi-title {
     color: #0077b6; /* Primary color for the title */
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
-    text-align:center
+    text-align: center; /* Centers the text horizontally */
+    display: flex;
+    justify-content: center; /* Ensures centering horizontally */
+    align-items: center; /* Ensures centering vertically if container has a height */
+
 }
 
 .medi-card .MuiButtonBase-root {
