@@ -16,6 +16,11 @@ const API_KEY = process.env.GEMINI_API_KEY;
 const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = process.env.DB_NAME || "Carely";
 
+require("dotenv").config();
+console.log("Mongo URL:", process.env.MONGO_URL);
+console.log("Firebase Credentials:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
+
 // ✅ API URL (Fixed Interpolation)
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
@@ -143,6 +148,7 @@ mongoclient
 
     // ✅ Start Server
     app.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`));
+    require("./cronJobs")
   })
   .catch((err) => {
     console.error("❌ DB Connection Error:", err);

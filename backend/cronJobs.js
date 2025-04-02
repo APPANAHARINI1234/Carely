@@ -1,10 +1,11 @@
 const cron = require("node-cron");
 const { MongoClient } = require("mongodb");
 const admin = require("./firebaseAdmin");
+require("dotenv").config();
 
 // MongoDB connection string
-const uri = "mongodb+srv://hariniap04:UU0Eybh93PG7iAZJ@carely.ksxzg.mongodb.net/?retryWrites=true&w=majority&appName=carely";
-
+const uri = process.env.MONGO_URL;
+console.log(uri)
 let db; // Store database connection globally
 
 // Connect to MongoDB once and reuse the connection
