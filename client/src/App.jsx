@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 import RootLayout from "./RootLayout";
 import Home from "./components/Home";
@@ -15,7 +15,13 @@ import MediBot from "./components/MediBot";
 import DiseaseDetail from "./components/DiseaseDetail";
 
 import { requestFcmToken, messaging } from "../src/components/notifications/firebaseConfig";
-import { getToken, onMessage } from "firebase/messaging";
+import { getToken } from "firebase/messaging";
+
+
+
+ 
+
+
 
 const browserRouter = createBrowserRouter([
   {
@@ -37,7 +43,28 @@ const browserRouter = createBrowserRouter([
 
 const App = () => {
   const [fsm, setFsm] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    });
+  }, []);
+
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the PWA install");
+        } else {
+          console.log("User dismissed the PWA install");
+        }
+        setDeferredPrompt(null);
+      });
+    }
+  };
   useEffect(() => {
     const fetchFcmToken = async () => {
       try {
@@ -81,6 +108,12 @@ const App = () => {
   return (
     <div className="main">
       <RouterProvider router={browserRouter} />
+      <div>
+      <h1>Carely PWA</h1>
+      <button onClick={handleInstall} style={{ padding: "10px", fontSize: "16px" }}>
+        Install Carely App
+      </button>
+    </div>
     </div>
   );
 };

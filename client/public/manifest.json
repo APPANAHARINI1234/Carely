@@ -1,0 +1,21 @@
+{
+    "short_name": "Carely",
+    "name": "Carely - Medical Assistance",
+    "icons": [
+      {
+        "src": "public/logo.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "public/logo.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#03045e",
+    "theme_color": "#0077b6"
+  }
+  
