@@ -3,12 +3,12 @@
     "name": "Carely - Medical Assistance",
     "icons": [
       {
-        "src": "public/logo.png",
+        "src": "/logo.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "public/logo.png",
+        "src": "/logo.png",
         "type": "image/png",
         "sizes": "512x512"
       }
