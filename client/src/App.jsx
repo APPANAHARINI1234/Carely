@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
 
 import RootLayout from "./RootLayout";
 import Home from "./components/Home";
@@ -15,7 +13,7 @@ import MediBot from "./components/MediBot";
 import DiseaseDetail from "./components/DiseaseDetail";
 
 import { requestFcmToken, messaging } from "../src/components/notifications/firebaseConfig";
-import { getToken, onMessage } from "firebase/messaging";
+import { getToken } from "firebase/messaging";
 
 const browserRouter = createBrowserRouter([
   {
@@ -37,7 +35,45 @@ const browserRouter = createBrowserRouter([
 
 const App = () => {
   const [fsm, setFsm] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
 
+  // ✅ Store beforeinstallprompt event and enable install button
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault(); // Stop automatic prompt
+      setDeferredPrompt(event); // Save event for later
+      setShowInstallButton(true); // Show install button
+      console.log("📢 Install prompt event stored");
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  // ✅ Trigger manual install prompt
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      console.log("🚀 Triggering install prompt...");
+      deferredPrompt.prompt(); // Show install prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("✅ User accepted the PWA install");
+        } else {
+          console.log("❌ User dismissed the PWA install");
+        }
+        setDeferredPrompt(null); // Reset event after use
+        setShowInstallButton(false); // Hide install button after choice
+      });
+    } else {
+      console.log("⚠️ No install prompt available");
+    }
+  };
+
+  // ✅ Fetch FCM token
   useEffect(() => {
     const fetchFcmToken = async () => {
       try {
@@ -57,8 +93,10 @@ const App = () => {
     fetchFcmToken();
   }, []);
 
+  // ✅ Fetch notifications periodically
   useEffect(() => {
     if (!fsm) return;
+
     const fetchNotifications = async () => {
       try {
         console.log("📡 Fetching notifications for token:", fsm);
@@ -73,6 +111,7 @@ const App = () => {
         console.error("❌ Error fetching notifications:", error);
       }
     };
+
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 30000);
     return () => clearInterval(interval);
@@ -81,6 +120,25 @@ const App = () => {
   return (
     <div className="main">
       <RouterProvider router={browserRouter} />
+      <div>
+        <h1>Carely PWA</h1>
+        {showInstallButton && (
+          <button
+            onClick={handleInstall}
+            style={{
+              padding: "10px",
+              fontSize: "16px",
+              background: "#0077b6",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            📲 Install Carely App
+          </button>
+        )}
+      </div>
     </div>
   );
 };
