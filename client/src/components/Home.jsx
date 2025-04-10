@@ -39,7 +39,7 @@ const Home = () => {
       medication reminders, and expert medical insights. Whether you need 
       symptom-based guidance or health notifications, we've got you covered.
     </p>
-    <Link to="/login">
+    <Link to="/auth">
       <button className="learn-more">Get Started</button>
     </Link>
   </div>
