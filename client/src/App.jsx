@@ -38,12 +38,11 @@ const App = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
 
-  // ✅ Store beforeinstallprompt event and enable install button
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault(); // Stop automatic prompt
-      setDeferredPrompt(event); // Save event for later
-      setShowInstallButton(true); // Show install button
+      event.preventDefault();
+      setDeferredPrompt(event);
+      setShowInstallButton(true);
       console.log("📢 Install prompt event stored");
     };
 
@@ -54,26 +53,24 @@ const App = () => {
     };
   }, []);
 
-  // ✅ Trigger manual install prompt
   const handleInstall = () => {
     if (deferredPrompt) {
       console.log("🚀 Triggering install prompt...");
-      deferredPrompt.prompt(); // Show install prompt
+      deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === "accepted") {
           console.log("✅ User accepted the PWA install");
         } else {
           console.log("❌ User dismissed the PWA install");
         }
-        setDeferredPrompt(null); // Reset event after use
-        setShowInstallButton(false); // Hide install button after choice
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
       });
     } else {
       console.log("⚠️ No install prompt available");
     }
   };
 
-  // ✅ Fetch FCM token
   useEffect(() => {
     const fetchFcmToken = async () => {
       try {
@@ -93,7 +90,6 @@ const App = () => {
     fetchFcmToken();
   }, []);
 
-  // ✅ Fetch notifications periodically
   useEffect(() => {
     if (!fsm) return;
 
@@ -120,25 +116,29 @@ const App = () => {
   return (
     <div className="main">
       <RouterProvider router={browserRouter} />
-      <div>
-        <h1>Carely PWA</h1>
-        {showInstallButton && (
-          <button
-            onClick={handleInstall}
-            style={{
-              padding: "10px",
-              fontSize: "16px",
-              background: "#0077b6",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            📲 Install Carely App
-          </button>
-        )}
-      </div>
+      
+      {showInstallButton && (
+  <button
+    onClick={handleInstall}
+    style={{
+      position: "fixed",
+      bottom: "20px",
+      left: "20px", 
+      zIndex: 9999,
+      padding: "12px 18px",
+      fontSize: "16px",
+      background: "#0096C7",
+      borderRadius: "25px",
+      color: "#fff",
+      border: "none",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+      cursor: "pointer",
+    }}
+  >
+    📲 Install Carely App
+  </button>
+)}
+
     </div>
   );
 };

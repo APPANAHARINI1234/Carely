@@ -75,7 +75,7 @@ function NotificationSettings() {
 
             <div className="form-section">
                 <div className="input-group">
-                    <label>💊 Medicine Name:</label>
+                    <label> Medicine Name:</label>
                     <input
                         type="text"
                         placeholder="Enter medicine name"
@@ -86,7 +86,7 @@ function NotificationSettings() {
                 </div>
 
                 <div className="input-group">
-                    <label>💉 Dosage:</label>
+                    <label> Dosage:</label>
                     <input
                         type="text"
                         placeholder="Enter dosage"
@@ -97,7 +97,7 @@ function NotificationSettings() {
                 </div>
 
                 <div className="input-group">
-                    <label>⏰ Reminder Time:</label>
+                    <label>Reminder Time:</label>
                     <input
                         type="time"
                         value={time}
