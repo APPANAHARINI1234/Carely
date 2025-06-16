@@ -126,7 +126,6 @@ function NotificationBell() {
 
     return (
         <div className="notification-bell">
-            <audio ref={audioRef} src="https://carely-health.vercel.app/notification.mp3" preload="auto" playsInline />
             <button ref={bellRef} className="bell-icon" onClick={() => setOpen(!open)}>
                 🔔
                 {notifications.length > 0 && (
