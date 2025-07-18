@@ -9,13 +9,13 @@ const firebaseConfig = {
   storageBucket: "carely-50b41.appspot.com",
   messagingSenderId: "859854972990",
   appId: "1:859854972990:web:035bfe233a5fef4620896f",
-   measurementId: "G-NV7SFQQG87",
+  measurementId: "G-NV7SFQQG87",
 };
 
-let firebaseApp = initializeApp(firebaseConfig);
-let messaging = getMessaging(firebaseApp);
+const firebaseApp = initializeApp(firebaseConfig);
+const messaging = getMessaging(firebaseApp);
 
-// 🔄 Global token variable to keep the latest FCM token
+// 🔄 Global token variable
 let latestToken = null;
 
 // Get stored token
@@ -23,14 +23,27 @@ const getStoredToken = () => localStorage.getItem("fcm_token");
 
 // Save token
 const saveToken = (token) => {
-  latestToken = token; // ✅ Always update global variable
+  latestToken = token;
   localStorage.setItem("fcm_token", token);
 };
 
-// Request FCM Token
+// ✅ Safe FCM token request with permission handling
 export const requestFcmToken = async () => {
   try {
-    let token = await getToken(messaging, {
+    // Step 1: Check permission
+    let permission = Notification.permission;
+
+    if (permission === "default") {
+      permission = await Notification.requestPermission();
+    }
+
+    if (permission !== "granted") {
+      console.warn("🚫 Notification permission not granted or blocked.");
+      return null;
+    }
+
+    // Step 2: Get token
+    const token = await getToken(messaging, {
       vapidKey: "BMBAOrejkl7Ig0fGxb-oCNihxZa3sB-HOjaWX7DZb2eYpNpVulls9k8r6j6w0X5aE8KhOWYdJ9zDUWcaKACI_mI",
     });
 
@@ -51,12 +64,12 @@ export const requestFcmToken = async () => {
 // Delete FCM Token
 export const removeFcmToken = async () => {
   try {
-    let token = getStoredToken();
+    const token = getStoredToken();
     if (!token) return null;
 
-    await deleteToken(await getToken(messaging)); 
+    await deleteToken(await getToken(messaging));
     localStorage.removeItem("fcm_token");
-    latestToken = null; // ✅ Clear global token
+    latestToken = null;
 
     console.log("🗑️ Deleted FCM Token:", token);
     return token;
@@ -66,13 +79,18 @@ export const removeFcmToken = async () => {
   }
 };
 
-// 🔄 Auto-refresh FCM Token every 10 minutes
+// 🔄 Refresh FCM Token logic
 export const refreshFcmToken = async () => {
   try {
     console.log("🔄 Checking for FCM Token refresh...");
 
-    let oldToken = getStoredToken();
-    let newToken = await requestFcmToken();
+    const oldToken = getStoredToken();
+    const newToken = await requestFcmToken();
+
+    if (!newToken) {
+      console.warn("⚠️ Skipping token update due to permission denial.");
+      return;
+    }
 
     if (oldToken !== newToken) {
       console.log("🔄 Refreshing FCM Token...");
@@ -82,6 +100,7 @@ export const refreshFcmToken = async () => {
         oldToken,
         newToken,
       });
+
       console.log("✅ Token updated successfully.");
     } else {
       console.log("✅ FCM Token is still valid.");
@@ -91,15 +110,15 @@ export const refreshFcmToken = async () => {
   }
 };
 
-// ✅ Call refresh on page load (ensures the latest token)
+// Run on page load
 window.addEventListener("load", async () => {
   await refreshFcmToken();
 });
 
-// ✅ Auto-refresh every 10 minutes
+// Auto-refresh every 10 minutes
 setInterval(refreshFcmToken, 10 * 60 * 1000);
 
-// 🔔 Listen for Incoming Messages
+// Listen for incoming messages
 export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
@@ -108,5 +127,5 @@ export const onMessageListener = () =>
     });
   });
 
-// ✅ Export latest token so other files can always use it
+// Export messaging and token
 export { messaging, latestToken };

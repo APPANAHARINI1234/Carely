@@ -67,12 +67,28 @@ async function sendPushNotification(userToken, medicineName, medicineDosage) {
     }
 
 
-    try {
-        await admin.messaging().send(message);
-        console.log(`✅ Notification sent successfully: ${medicineName} (${medicineDosage})`);
-    } catch (err) {
-        console.error("❌ Error sending notification:", err);
+   try {
+    await admin.messaging().send(message);
+    console.log(`✅ Notification sent successfully: ${medicineName} (${medicineDosage})`);
+} catch (err) {
+    console.error("❌ Error sending notification:", err);
+
+    if (err.code === 'messaging/registration-token-not-registered') {
+        console.warn(`🚫 Invalid token detected. Removing token: ${userToken}`);
+
+        // Optionally, remove or unset the invalid token from your DB
+        try {
+            await db.collection("mediNotify").updateOne(
+                { deviceToken: userToken },
+                { $unset: { deviceToken: "" } }
+            );
+            console.log("🧹 Cleared invalid deviceToken from DB.");
+        } catch (dbErr) {
+            console.error("❌ Error updating DB to remove invalid token:", dbErr);
+        }
     }
+}
+
 }
 
 // Schedule task to run every minute
